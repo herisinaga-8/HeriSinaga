@@ -1,0 +1,984 @@
+/* ===========================================================
+   Pengalaman GIS — Heri Basa Sinaga, S.Geog.
+   Perbaikan utama:
+   - token warna/teks dirapikan (varian surface, text-soft, faint lebih kontras)
+   - skala tipografi dinaikkan agar teks 0.9rem tidak terlalu kecil
+   - rail tab tidak lagi menyusut / terpotong (flex: 0 0 auto + rail geser di mobile)
+   - galeri menempel (sticky) di desktop agar tidak menyisakan ruang kosong
+   - target sentuh titik galeri ≥ 30px, focus ring tidak lagi merusak bentuk bulat
+   - fallback gambar rusak, caption maksimal dua baris, dukungan reduced-motion
+   =========================================================== */
+
+/* -----------------------------------------------------------
+   1. Token
+   ----------------------------------------------------------- */
+:root {
+  /* Warna dasar */
+  --ink-950: #050a12;
+  --ink-900: #070d18;
+  --ink-800: #0b1524;
+  --surface: #101b2b;
+  --surface-inset: #0e1826;
+  --surface-2: #16253a;
+  --surface-3: #1b2d45;
+  --line: #22334a;
+  --line-strong: #2f4560;
+
+  /* Teks */
+  --text-strong: #ffffff;
+  --text: #edf3fa;
+  --text-soft: #c9d8e8;
+  --muted: #9bacc4;
+  --faint: #8b9db5;
+
+  /* Aksen tunggal */
+  --accent: #10b981;
+  --accent-bright: #34d399;
+  --accent-light: #6ee7b7;
+  --accent-soft: rgba(16, 185, 129, 0.12);
+  --accent-ink: #04150f;
+
+  /* Tipografi */
+  --font-display: "Sora", "Segoe UI", sans-serif;
+  --font-body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+
+  /* Bentuk */
+  --radius-panel: 14px;
+  --radius-frame: 12px;
+  --radius-control: 9px;
+  --radius-chip: 6px;
+
+  /* Ritme & ukuran */
+  --shell: 1120px;
+  --gutter: 24px;
+  --grid-cell: 96px;
+  --tap: 44px;
+
+  /* Gerak */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --fast: 160ms;
+  --slow: 420ms;
+}
+
+/* -----------------------------------------------------------
+   2. Dasar
+   ----------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--ink-900);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  overflow-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+  text-wrap: balance;
+}
+
+p,
+ul,
+figure {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Outline tanpa memaksa border-radius, agar tombol bulat tetap bulat */
+:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 12px;
+  z-index: 60;
+  padding: 12px 18px;
+  border-radius: var(--radius-control);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-160%);
+  transition: transform var(--fast) var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* -----------------------------------------------------------
+   3. Latar: kisi survei + sapuan cahaya
+   ----------------------------------------------------------- */
+.survey-grid,
+.glow {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.survey-grid {
+  background-image: linear-gradient(to right, rgba(47, 69, 96, 0.26) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(47, 69, 96, 0.26) 1px, transparent 1px);
+  background-size: var(--grid-cell) var(--grid-cell);
+  background-position: center top;
+  -webkit-mask-image: radial-gradient(ellipse 92% 58% at 50% 0%, #000 4%, rgba(0, 0, 0, 0.35) 46%, transparent 80%);
+  mask-image: radial-gradient(ellipse 92% 58% at 50% 0%, #000 4%, rgba(0, 0, 0, 0.35) 46%, transparent 80%);
+}
+
+.glow {
+  background: radial-gradient(680px 380px at 10% -8%, rgba(16, 185, 129, 0.15), transparent 70%),
+    radial-gradient(520px 320px at 96% 4%, rgba(52, 211, 153, 0.07), transparent 72%);
+}
+
+/* -----------------------------------------------------------
+   4. Kerangka halaman
+   ----------------------------------------------------------- */
+.container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: var(--shell);
+  margin: 0 auto;
+  padding: 28px var(--gutter) 72px;
+}
+
+/* -----------------------------------------------------------
+   5. Bilah atas
+   ----------------------------------------------------------- */
+.topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--tap);
+  padding: 6px 4px;
+  color: var(--accent-bright);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--fast) var(--ease);
+}
+
+.back-btn i {
+  font-size: 0.78rem;
+  transition: transform var(--fast) var(--ease);
+}
+
+.back-btn:hover {
+  color: var(--accent-light);
+}
+
+.back-btn:hover i {
+  transform: translateY(-2px);
+}
+
+.topbar-meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* -----------------------------------------------------------
+   6. Kepala halaman
+   ----------------------------------------------------------- */
+.page-head {
+  max-width: 780px;
+  padding: 52px 0 44px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent-bright);
+}
+
+.eyebrow::before {
+  content: "";
+  width: 26px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.page-title {
+  font-size: clamp(2rem, 4.4vw, 2.9rem);
+  line-height: 1.12;
+}
+
+.page-role {
+  margin-top: 14px;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--accent-bright);
+}
+
+.page-intro {
+  max-width: 66ch;
+  margin-top: 16px;
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.profile-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.profile-facts li {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--ink-800);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.profile-facts i {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+/* -----------------------------------------------------------
+   7. Rail penugasan
+   ----------------------------------------------------------- */
+.timeline {
+  padding-top: 4px;
+}
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-bottom: 18px;
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.section-hint {
+  font-size: 0.9rem;
+  color: var(--faint);
+}
+
+.tab-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 2px 0 26px;
+  border-bottom: 1px solid var(--line);
+}
+
+.tab-btn {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 9px;
+  min-height: var(--tap);
+  padding: 9px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: left;
+  cursor: pointer;
+  transition: color var(--fast) var(--ease), border-color var(--fast) var(--ease),
+    background-color var(--fast) var(--ease), transform var(--fast) var(--ease);
+}
+
+.tab-btn .tab-index {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--faint);
+  transition: color var(--fast) var(--ease);
+}
+
+.tab-btn i {
+  font-size: 0.8rem;
+  color: var(--accent);
+  transition: color var(--fast) var(--ease);
+}
+
+.tab-btn:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.tab-btn:hover .tab-index {
+  color: var(--muted);
+}
+
+.tab-btn:hover i {
+  color: var(--accent-bright);
+}
+
+.tab-btn:active {
+  transform: translateY(1px);
+}
+
+.tab-btn[aria-selected="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 700;
+}
+
+.tab-btn[aria-selected="true"] .tab-index,
+.tab-btn[aria-selected="true"] i {
+  color: var(--accent-ink);
+}
+
+/* -----------------------------------------------------------
+   8. Panel detail
+   ----------------------------------------------------------- */
+.panel {
+  margin-top: 30px;
+  padding: clamp(20px, 3vw, 32px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-panel);
+  background: linear-gradient(180deg, var(--surface) 0%, var(--surface-inset) 100%);
+  scroll-margin-top: 20px;
+}
+
+/* Panel hanya menerima fokus programatik dari tautan "lewati" */
+.panel:focus {
+  outline: none;
+}
+
+.panel:focus-visible {
+  outline: 2px solid var(--accent-bright);
+  outline-offset: 4px;
+}
+
+.panel-view {
+  min-width: 0;
+  animation: panelIn 280ms var(--ease) both;
+}
+
+@keyframes panelIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.role-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.role-head > div {
+  flex: 1 1 340px;
+  min-width: 0;
+}
+
+.role-kicker {
+  display: block;
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.role-title {
+  font-size: clamp(1.3rem, 2.2vw, 1.6rem);
+  line-height: 1.3;
+}
+
+.company {
+  margin-top: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.5;
+  color: var(--accent-bright);
+}
+
+.date-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 13px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--ink-900);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.date-badge i {
+  font-size: 0.75rem;
+  color: var(--accent);
+}
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  align-items: start;
+  gap: 32px 28px;
+  margin-top: 24px;
+}
+
+.description {
+  min-width: 0;
+}
+
+.description > p {
+  font-size: 1rem;
+  line-height: 1.78;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.highlights {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.95rem;
+  line-height: 1.72;
+  color: var(--muted);
+  text-wrap: pretty;
+}
+
+.highlights li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 0.68em;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: rotate(45deg);
+}
+
+.highlights strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.highlights em {
+  color: var(--text-soft);
+  font-style: italic;
+}
+
+.tech-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px dashed var(--line);
+}
+
+.tech-list li {
+  padding: 4px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-chip);
+  background: var(--ink-900);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.6;
+  color: var(--accent-bright);
+}
+
+/* -----------------------------------------------------------
+   9. Galeri
+   ----------------------------------------------------------- */
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.slider {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-frame);
+  background: var(--surface-2);
+  overflow: hidden;
+  touch-action: pan-y;
+  isolation: isolate;
+}
+
+.slide-track {
+  display: flex;
+  height: 100%;
+  transition: transform var(--slow) var(--ease);
+  will-change: transform;
+}
+
+.slide {
+  position: relative;
+  flex: 0 0 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: var(--surface-2);
+  color: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+}
+
+/* Gambar yang gagal dimuat disembunyikan agar teks alt tidak menumpuk */
+.slide img.is-missing {
+  visibility: hidden;
+}
+
+/* Placeholder bila berkas foto tidak tersedia */
+.slide-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px 22px 60px;
+  text-align: center;
+  background-image: radial-gradient(circle at 50% 34%, var(--accent-soft), transparent 62%),
+    linear-gradient(to right, rgba(47, 69, 96, 0.32) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(47, 69, 96, 0.32) 1px, transparent 1px);
+  background-size: 100% 100%, 42px 42px, 42px 42px;
+}
+
+.slide-placeholder[hidden] {
+  display: none !important;
+}
+
+.slide-placeholder i {
+  font-size: 1.9rem;
+  color: var(--accent);
+}
+
+.slide-placeholder span {
+  max-width: 24ch;
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--text);
+}
+
+.slide-caption {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: -webkit-box;
+  padding: 24px 16px 12px;
+  overflow: hidden;
+  background: linear-gradient(to top, rgba(5, 10, 18, 0.96) 12%, rgba(5, 10, 18, 0.66) 62%, transparent 100%);
+  font-size: 0.85rem;
+  line-height: 1.5;
+  text-align: center;
+  color: var(--text-soft);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid var(--line-strong);
+  border-radius: 50%;
+  background: rgba(5, 10, 18, 0.82);
+  color: var(--accent-bright);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color var(--fast) var(--ease), border-color var(--fast) var(--ease),
+    color var(--fast) var(--ease);
+}
+
+/* Area klik 46px tanpa memperbesar tombol secara visual */
+.slider-btn::after {
+  content: "";
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+}
+
+.slider-btn:hover {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.slider-btn.prev {
+  left: 10px;
+}
+
+.slider-btn.next {
+  right: 10px;
+}
+
+.gallery-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 30px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line-strong);
+  transition: width var(--fast) var(--ease), background-color var(--fast) var(--ease);
+}
+
+.dot:hover::before {
+  background: var(--muted);
+}
+
+.dot[aria-current="true"]::before {
+  width: 20px;
+  background: var(--accent);
+}
+
+.counter {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -----------------------------------------------------------
+   10. Footer
+   ----------------------------------------------------------- */
+.page-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 20px;
+  margin-top: 34px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  font-size: 0.85rem;
+  color: var(--faint);
+}
+
+.foot-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  color: var(--accent-bright);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color var(--fast) var(--ease);
+}
+
+.foot-link:hover {
+  color: var(--accent-light);
+}
+
+/* -----------------------------------------------------------
+   11. Responsif
+   ----------------------------------------------------------- */
+/* Galeri menempel saat kolom teks lebih tinggi (desktop & tablet lebar) */
+@media (min-width: 901px) {
+  .gallery {
+    position: sticky;
+    top: 24px;
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --gutter: 20px;
+    --grid-cell: 72px;
+  }
+
+  .container {
+    padding-bottom: 64px;
+  }
+
+  .page-head {
+    padding: 40px 0 34px;
+  }
+
+  .panel-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 24px;
+  }
+
+  /* Galeri tampil lebih dulu di layar sempit */
+  .gallery {
+    order: -1;
+  }
+}
+
+@media (max-width: 700px) {
+  .tab-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 2px var(--gutter) 22px;
+    scroll-padding-inline: var(--gutter);
+    scroll-snap-type: x proximity;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tab-btn {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --gutter: 18px;
+  }
+
+  .topbar {
+    padding-bottom: 18px;
+  }
+
+  .topbar-meta {
+    font-size: 0.7rem;
+  }
+
+  .page-head {
+    padding: 32px 0 28px;
+  }
+
+  .page-intro {
+    font-size: 1rem;
+  }
+
+  .section-hint {
+    display: none;
+  }
+
+  .role-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .role-head > div {
+    flex: 1 1 auto;
+  }
+
+  .panel {
+    border-radius: var(--radius-frame);
+    scroll-margin-top: 12px;
+  }
+
+  .date-badge,
+  .slide-caption {
+    font-size: 0.75rem;
+  }
+
+  .slider-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .page-foot {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .date-badge {
+    white-space: normal;
+  }
+
+  .tech-list li {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .tab-btn .tab-index {
+    display: none;
+  }
+
+  .slide-caption {
+    font-size: 0.72rem;
+  }
+}
+
+/* -----------------------------------------------------------
+   12. Preferensi pengguna
+   ----------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .panel-view {
+    animation: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --muted: #c3d2e4;
+    --faint: #a8b8cc;
+    --line: #3a5070;
+  }
+}
