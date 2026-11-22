@@ -9,12 +9,12 @@
   <meta property="og:title" content="Heri Basa Sinaga, S.Geog. — GIS, UAV Mapping &amp; Safety Officer" />
   <meta property="og:description" content="Data spasial yang presisi dan pekerjaan lapangan yang aman: GIS, pemetaan UAV, survei terestris, dan pengawasan K3 industri." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="images/hero-pltu-aerial.jpg" />
+  <meta property="og:image" content="./images/hero-aerial-pltu.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="./style.css" />
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 
   <header class="site-header" id="site-header">
     <div class="shell header-inner">
-      <a class="brand" href="index.html">
+      <a class="brand" href="#hero">
         <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
           <circle cx="16" cy="16" r="14.5" fill="none" stroke="currentColor" stroke-width="1.2" />
           <path d="M16 3.5v6M16 22.5v6M3.5 16h6M22.5 16h6" stroke="currentColor" stroke-width="1.2" />
@@ -39,6 +39,7 @@
         <a href="#layanan" data-nav="layanan">Layanan</a>
         <a href="#proyek" data-nav="proyek">Proyek</a>
         <a href="#pengalaman" data-nav="pengalaman">Pengalaman</a>
+        <a href="#pengalaman-tambahan" data-nav="pengalaman-tambahan">Tambahan</a>
         <a href="#keahlian" data-nav="keahlian">Keahlian</a>
         <a href="#kontak" data-nav="kontak">Kontak</a>
       </nav>
@@ -57,10 +58,11 @@
         <a href="#layanan">Layanan</a>
         <a href="#proyek">Proyek</a>
         <a href="#pengalaman">Pengalaman</a>
+        <a href="#pengalaman-tambahan">Pengalaman tambahan</a>
         <a href="#keahlian">Keahlian</a>
         <a href="#kontak">Kontak</a>
       </nav>
-      <a class="btn btn-primary mobile-menu-cta" href="cv.html">Unduh CV (PDF)</a>
+      <button class="btn btn-primary mobile-menu-cta" type="button" data-open="cv">Lihat CV</button>
     </div>
   </header>
 
@@ -71,7 +73,7 @@
         <div class="hero-copy">
           <p class="eyebrow"><span class="pulse" aria-hidden="true"></span> GIS · UAV Mapping · Safety Officer (AK3U)</p>
           <h1>Memetakan wilayah.<br /><span class="accent">Menjaga keselamatan kerja.</span></h1>
-          <p class="hero-lead" style="text-align: justify;"> 
+          <p class="hero-lead">
             Praktisi geospasial dengan pengalaman lapangan sejak 2018: pengolahan data spasial, pemetaan foto udara
             (UAV), dan pengawasan K3 industri bersertifikat AK3U Kemnaker RI. Terbiasa bekerja di area operasional
             PLTU dengan standar keselamatan, dokumentasi, dan presisi data yang ketat.
@@ -84,18 +86,8 @@
                 <path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
               </svg>
             </a>
-            <a class="btn btn-outline" href="#proyek">
-              Lihat portofolio
-              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                <path d="M8 3v10M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </a>
-            <a class="btn btn-ghost" href="cv.html">
-              <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                <path d="M8 2v8M4.5 7 8 10.5 11.5 7M3 13h10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-              Unduh CV
-            </a>
+            <a class="btn btn-outline" href="#proyek">Lihat portofolio</a>
+            <button class="btn btn-ghost" type="button" data-open="cv">Unduh CV</button>
           </div>
 
           <dl class="hero-metrics">
@@ -116,7 +108,7 @@
 
         <figure class="map-panel">
           <div class="map-frame">
-            <img src="./image/profil.jpg" alt="Foto udara kompleks PLTU pesisir dengan dermaga bongkar dan galeri konveyor" width="1024" height="1200" fetchpriority="high" decoding="async" />
+            <img src="./images/hero-aerial-pltu.jpg" alt="Foto udara kompleks PLTU pesisir dengan dermaga bongkar dan galeri konveyor" width="300" height="500" fetchpriority="high" decoding="async" />
             <div class="map-overlay" aria-hidden="true">
               <span class="map-grid"></span>
               <span class="map-corner map-corner--tl"></span>
@@ -158,7 +150,7 @@
         <div class="about-grid">
           <div class="about-aside">
             <figure class="about-photo">
-              <img src="./image/home 1.png" alt="hhhh" width="1280" height="400" decoding="async" />
+              <img src="./images/about-gnss-survey.jpg" alt="Pengukuran GCP dengan GNSS RTK di area industri" width="200" height="300" loading="lazy" decoding="async" />
               <figcaption>Pengukuran GCP/ICP · GNSS geodetik</figcaption>
             </figure>
             <ul class="credential-list">
@@ -168,7 +160,7 @@
             </ul>
           </div>
 
-          <div class="about-body" style="text-align: justify">
+          <div class="about-body">
             <p class="lead-muted">
               Saya bekerja di antara dua disiplin yang saling menguatkan: data spasial dan keselamatan kerja. Di satu
               sisi merancang survei, mengolah citra, dan membangun geodatabase yang konsisten. Di sisi lain memastikan
@@ -219,25 +211,25 @@
           <div class="card-grid card-grid--4">
             <article class="card">
               <span class="card-index">01</span>
-              <h4 class="card-title">GIS &amp; Analisis Spasial</h4>
+              <h3 class="card-title">GIS &amp; Analisis Spasial</h3>
               <p class="card-text">Digitasi, geoprocessing, analisis spasial, perancangan geodatabase, validasi topologi,
                 dan kontrol kualitas dengan ArcGIS Pro serta QGIS.</p>
             </article>
             <article class="card">
               <span class="card-index">02</span>
-              <h4 class="card-title">Pemetaan UAV</h4>
+              <h3 class="card-title">Pemetaan UAV</h3>
               <p class="card-text">Perencanaan jalur terbang, akuisisi foto udara, penempatan GCP/ICP, ortomozaik, serta
                 pengolahan DEM/DSM.</p>
             </article>
             <article class="card">
               <span class="card-index">03</span>
-              <h4 class="card-title">Survei Terestris</h4>
+              <h3 class="card-title">Survei Terestris</h3>
               <p class="card-text">Pengukuran GNSS geodetik, Total Station, dan Auto Level untuk data batas, elevasi,
                 serta validasi lapangan.</p>
             </article>
             <article class="card">
               <span class="card-index">04</span>
-              <h4 class="card-title">Penginderaan Jauh</h4>
+              <h3 class="card-title">Penginderaan Jauh</h3>
               <p class="card-text">Interpretasi citra, pemantauan tutupan lahan dan kesehatan tanaman, verifikasi area,
                 serta penyusunan peta tematik.</p>
             </article>
@@ -253,25 +245,25 @@
           <div class="card-grid card-grid--4">
             <article class="card card--amber">
               <span class="card-index">01</span>
-              <h4 class="card-title">Permit to Work (PTW)</h4>
+              <h3 class="card-title">Permit to Work (PTW)</h3>
               <p class="card-text">Pengelolaan alur izin kerja: peninjauan, pembukaan, pemantauan, hingga penutupan
                 pekerjaan di area operasional.</p>
             </article>
             <article class="card card--amber">
               <span class="card-index">02</span>
-              <h4 class="card-title">HIRARC, JSA &amp; CSMS</h4>
+              <h3 class="card-title">HIRARC, JSA &amp; CSMS</h3>
               <p class="card-text">Identifikasi bahaya, penilaian risiko, penyusunan Job Safety Analysis, dan penafsiran
                 dokumen CSMS kontraktor.</p>
             </article>
             <article class="card card--amber">
               <span class="card-index">03</span>
-              <h4 class="card-title">Inspeksi &amp; Toolbox Meeting</h4>
+              <h3 class="card-title">Inspeksi &amp; Toolbox Meeting</h3>
               <p class="card-text">Pengawasan kepatuhan APD, inspeksi area kerja harian, safety induction, dan toolbox
                 meeting bersama tim kerja.</p>
             </article>
             <article class="card card--amber">
               <span class="card-index">04</span>
-              <h4 class="card-title">Tanggap Darurat &amp; Laporan</h4>
+              <h3 class="card-title">Tanggap Darurat &amp; Laporan</h3>
               <p class="card-text">Kesiapsiagaan P3K, APAR, dan evakuasi, disertai dokumentasi serta pelaporan K3
                 harian.</p>
             </article>
@@ -291,14 +283,14 @@
 
         <div class="project-list">
           <article class="project-card project-card--feature">
-            <a class="project-media" href="./asset/featured project/index.html#safety-pltu">
-              <img src="./image/featured project/tbm.jpeg" alt="TBM" width="1280" height="300" decoding="async" />
+            <button class="project-media" type="button" data-project="safety-pltu" aria-label="Lihat detail Pengawasan K3 Operasional PLTU">
+              <img src="./images/project-k3-ptw.jpg" alt="Safety officer memeriksa area kerja dengan checklist izin kerja" width="300" height="300" loading="lazy" decoding="async" />
               <span class="chip chip--amber project-chip">K3 Industri</span>
-            </a>
-            <div class="project-body" style="text-align: justify">
+            </button>
+            <div class="project-body">
               <p class="project-meta">PT Solid Tehnik Sejahtera · PLTU Labuhan Angin · 2026 — sekarang</p>
               <h3 class="project-title">Pengawasan K3 Operasional PLTU</h3>
-              <p class="card-text" >Pengawasan K3 pekerjaan operasional di PLTU Labuhan Angin, mencakup pengelolaan PTW,
+              <p class="card-text">Pengawasan K3 pekerjaan operasional di PLTU Labuhan Angin, mencakup pengelolaan PTW,
                 HIRARC, inspeksi area, dan pengawasan kepatuhan APD bersama tim kontraktor.</p>
               <ul class="tag-list">
                 <li>Permit to Work</li>
@@ -306,75 +298,76 @@
                 <li>Inspeksi APD</li>
               </ul>
               <div class="project-actions">
-                <a class="btn btn-primary btn-sm" href="./asset/featured project/index.html#safety-pltu">
+                <button class="btn btn-primary btn-sm" type="button" data-project="safety-pltu">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </article>
 
           <div class="project-grid">
             <article class="project-card">
-              <a class="project-media" href="./asset/featured project/index.html#drone-ptpn7">
-                <img src="./image/featured project/lampung.jpeg" alt="PTPN VII Lampung" width="1280" height="300" decoding="async" />
+              <button class="project-media" type="button" data-project="drone-ptpn7" aria-label="Lihat detail Survei Multispektral Perkebunan">
+                <img src="./images/project-multispectral-plantation.jpg" alt="Foto udara perkebunan kelapa sawit untuk analisis multispektral" width="300" height="300" loading="lazy" decoding="async" />
                 <span class="chip chip--green project-chip">GIS &amp; Drone</span>
-              </a>
-              <div class="project-body" style="text-align: justify">
+              </button>
+              <div class="project-body">
                 <p class="project-meta">UGM × PT PUSRI · PTPN VII · Juni 2024</p>
                 <h3 class="project-title">Survei Multispektral Perkebunan</h3>
                 <p class="card-text">Pemetaan tutupan lahan 70 ha dengan DJI Mavic 3 Multispectral RTK untuk analisis
                   kesehatan tanaman.</p>
                 <div class="project-actions">
-                  <a class="btn btn-outline btn-sm" href="./asset/featured project/index.html#drone-ptpn7">
+                  <button class="btn btn-outline btn-sm" type="button" data-project="drone-ptpn7">
                     Lihat detail
                     <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                       <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                  </a>
+                  </button>
                 </div>
               </div>
             </article>
 
             <article class="project-card">
-              <a class="project-media" href="./asset/featured project/index.html#abrasi-bantul">
-                <img src="./image/featured project/pantai.jpeg" alt="Garis pantai berpasir dengan abrasi dan ombak dari foto udara" width="1280" height="300" decoding="async" />
+              <button class="project-media" type="button" data-project="abrasi-bantul" aria-label="Lihat detail Analisis Erosi Pesisir Bantul">
+                <img src="./images/project-coastal-erosion.jpg" alt="Garis pantai berpasir dengan abrasi dan ombak dari foto udara" width="300" height="300" loading="lazy" decoding="async" />
                 <span class="chip chip--green project-chip">Survei &amp; Pemetaan</span>
-              </a>
-              <div class="project-body" style="text-align: justify">
+              </button>
+              <div class="project-body">
                 <p class="project-meta">PT Inspirasi Multitama Andalan · BPBD DIY · 2022</p>
                 <h3 class="project-title">Analisis Erosi Pesisir Bantul</h3>
                 <p class="card-text">Pengukuran GCP/ICP, akuisisi foto udara Phantom 4 RTK, dan analisis perubahan garis
                   pantai.</p>
                 <div class="project-actions">
-                  <a class="btn btn-outline btn-sm" href="./asset/featured project/index.html#abrasi-bantul">
+                  <button class="btn btn-outline btn-sm" type="button" data-project="abrasi-bantul">
                     Lihat detail
                     <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                       <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                  </a>
+                  </button>
                 </div>
               </div>
             </article>
 
             <article class="project-card">
-              <a class="project-media" href="./asset/featured project/index.html#hycon-irigasi">
-                <img src="./image/featured project/jalur.jpeg" alt="Foto udara saluran irigasi beton membelah sawah dengan bangunan pintu air" width="1280" height="300" decoding="async" />
+              <button class="project-media" type="button" data-project="hycon-irigasi" aria-label="Lihat detail Akuisisi Data Foto Udara untuk AMDAL">
+                <img src="./images/project-irrigation-canal.jpg" alt="Foto udara saluran irigasi beton membelah sawah dengan bangunan pintu air" width="300" height="300" loading="lazy" decoding="async" />
                 <span class="chip chip--green project-chip">Pemetaan UAV</span>
-              </a>
-              <div class="project-body" style="text-align: justify">
-                <p class="project-meta">PT. Adare Multi Servis · 2022</p>
-                <h3 class="project-title">Akuisisi Data Foto Udara Untuk Dokumen AMDAL</h3>
-                <p class="card-text">Akuisisi Foto udara dan Pembuatan Peta Orthopoto Untuk Kebutuhan Dokumen Analisisi Mengenai Dampak Lingkungan (AMDAL) .</p>
+              </button>
+              <div class="project-body">
+                <p class="project-meta">PT Adare Multi Servis · 2022</p>
+                <h3 class="project-title">Akuisisi Foto Udara untuk Dokumen AMDAL</h3>
+                <p class="card-text">Akuisisi foto udara dan pembuatan peta orthophoto untuk kebutuhan dokumen Analisis
+                  Mengenai Dampak Lingkungan (AMDAL).</p>
                 <div class="project-actions">
-                  <a class="btn btn-outline btn-sm" href="./asset/featured project/index.html#hycon-irigasi">
+                  <button class="btn btn-outline btn-sm" type="button" data-project="hycon-irigasi">
                     Lihat detail
                     <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                       <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                  </a>
+                  </button>
                 </div>
               </div>
             </article>
@@ -408,12 +401,12 @@
                   <li>Pembaruan peta dasar RDTR melalui interpretasi citra dan digitasi.</li>
                   <li>Standarisasi geodatabase, validasi topologi, dan kendali mutu spasial.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-1">
+                <button class="timeline-detail" type="button" data-exp="exp-1">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">Jun 2024</p>
@@ -423,12 +416,12 @@
                   <li>Akuisisi foto udara multispektral 70 ha dengan DJI Mavic 3M RTK.</li>
                   <li>Penyusunan data spasial resolusi tinggi untuk analisis kesehatan tanaman.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-2">
+                <button class="timeline-detail" type="button" data-exp="exp-2">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">Des 2022 — Agu 2024</p>
@@ -438,12 +431,12 @@
                   <li>Pengolahan foto udara, DEM, DSM, dan peta tutupan lahan untuk dokumen AMDAL.</li>
                   <li>Perencanaan jalur terbang otonom dan pemetaan lingkungan industri.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-3">
+                <button class="timeline-detail" type="button" data-exp="exp-3">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">Okt 2022 — Des 2022</p>
@@ -453,12 +446,12 @@
                   <li>Pengukuran GCP/ICP GPS geodetik dan pemetaan drone pesisir Bantul.</li>
                   <li>Survei profil pantai dan analisis erosi bersama BPBD DIY.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-4">
+                <button class="timeline-detail" type="button" data-exp="exp-4">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">2022</p>
@@ -468,12 +461,12 @@
                   <li>Produksi massal 300+ peta tematik irigasi dan koreksi topologi saluran air.</li>
                   <li>Pembaruan geodatabase aset bendungan dan pintu air.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-5">
+                <button class="timeline-detail" type="button" data-exp="exp-5">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">Agu 2021 — Des 2021</p>
@@ -483,12 +476,12 @@
                   <li>Koordinasi tim survei lintas instansi (BPBD DIY, Dinkes, Dinsos, Dukcapil).</li>
                   <li>Integrasi data spasial untuk pemetaan logistik kebencanaan.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-6">
+                <button class="timeline-detail" type="button" data-exp="exp-6">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item">
                 <p class="timeline-date">2018 — 2024</p>
@@ -498,12 +491,12 @@
                   <li>Instruktur praktikum GIS, GNSS RTK, Total Station, dan survei udara drone.</li>
                   <li>Asisten riset analisis erosi, abrasi, dan sedimentasi pesisir.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/gis/index.html#panel-exp-7">
+                <button class="timeline-detail" type="button" data-exp="exp-7">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
             </ol>
           </div>
@@ -522,12 +515,12 @@
                   <li>Pengawasan K3 operasional dan pengelolaan PTW dari pembukaan hingga penutupan.</li>
                   <li>Identifikasi bahaya, kontrol risiko, inspeksi area, dan laporan K3 harian.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/k3/Untitled-1.html#panel-k3-1">
+                <button class="timeline-detail" type="button" data-exp="k3-1">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item is-amber">
                 <p class="timeline-date">Mar 2026</p>
@@ -537,12 +530,12 @@
                   <li>Pengawasan K3 pekerjaan penggantian kWh meter generator PLTU.</li>
                   <li>Monitoring PTW, kepatuhan APD, dan koordinasi lintas tim.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/k3/Untitled-1.html#panel-k3-2">
+                <button class="timeline-detail" type="button" data-exp="k3-2">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item is-amber">
                 <p class="timeline-date">Jan 2026</p>
@@ -552,12 +545,12 @@
                   <li>Pengawasan keselamatan kerja penggantian panel MMF WTP PLTU.</li>
                   <li>Identifikasi bahaya kelistrikan, pengawasan APD, dan dokumentasi harian.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/k3/Untitled-1.html#panel-k3-3">
+                <button class="timeline-detail" type="button" data-exp="k3-3">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item is-amber">
                 <p class="timeline-date">Okt 2025</p>
@@ -567,12 +560,12 @@
                   <li>Pengawasan preventive maintenance panel CEMS di area PLTU.</li>
                   <li>Koordinasi akses area kerja, mobilisasi material, dan monitoring APD.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/k3/Untitled-1.html#panel-k3-4">
+                <button class="timeline-detail" type="button" data-exp="k3-4">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
               <li class="timeline-item is-amber">
                 <p class="timeline-date">Sep 2025</p>
@@ -582,12 +575,12 @@
                   <li>Pengawasan pemasangan lampu Ship Unloader PLTU.</li>
                   <li>Pelaksanaan toolbox meeting, pengawasan APD, dan laporan K3.</li>
                 </ul>
-                <a class="timeline-detail" href="./asset/pengalaman/k3/Untitled-1.html#panel-k3-5">
+                <button class="timeline-detail" type="button" data-exp="k3-5">
                   Lihat detail
                   <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
                     <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
                   </svg>
-                </a>
+                </button>
               </li>
             </ol>
           </div>
@@ -595,11 +588,121 @@
       </div>
     </section>
 
-    <!-- KEAHLIAN -->
-    <section class="section" id="keahlian">
+    <!-- PENGALAMAN TAMBAHAN -->
+    <section class="section" id="pengalaman-tambahan">
       <div class="shell">
         <div class="section-head">
-          <p class="section-tag">05 — Keahlian</p>
+          <p class="section-tag">05 — Pengalaman tambahan</p>
+          <h2 class="section-title">Enam peran pendukung di balik pekerjaan lapangan</h2>
+          <p class="section-note">Klik salah satu kartu untuk membuka ringkasan peran, poin tanggung jawab, dan
+            dokumentasi visualnya.</p>
+        </div>
+
+        <div class="extra-list" id="extra-list">
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="rdtr" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">01</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Pemetaan RDTR &amp; Geodatabase</span>
+              <span class="extra-org">GIS Consultant · 2024—2025</span>
+            </button>
+          </div>
+
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="multispectral" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">02</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Pilot UAV Multispektral</span>
+              <span class="extra-org">UGM × PUSRI · 2024</span>
+            </button>
+          </div>
+
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="coastal" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">03</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Survei Pesisir &amp; Profil Pantai</span>
+              <span class="extra-org">IMA · 2022</span>
+            </button>
+          </div>
+
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="instructor" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">04</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Instruktur Praktikum Survei</span>
+              <span class="extra-org">Sekolah Vokasi UGM</span>
+            </button>
+          </div>
+
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="logistics" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">05</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Logistik Kebencanaan</span>
+              <span class="extra-org">CV Buana Wirapersada · 2021</span>
+            </button>
+          </div>
+
+          <div class="extra-item">
+            <button class="extra-trigger" type="button" data-extra="emergency" aria-expanded="false" aria-controls="extra-panel">
+              <span class="extra-trigger-top">
+                <span class="extra-index">06</span>
+                <span class="extra-chevron" aria-hidden="true">
+                  <svg class="icon" viewBox="0 0 16 16"><path d="M4 6.5 8 10.5 12 6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                </span>
+              </span>
+              <span class="extra-title">Kesiapsiagaan Darurat</span>
+              <span class="extra-org">Sertifikasi K3 · 2025</span>
+            </button>
+          </div>
+
+          <div class="extra-panel" id="extra-panel" hidden>
+            <div class="extra-panel-inner">
+              <div class="extra-panel-body">
+                <div class="extra-panel-text">
+                  <span class="extra-panel-eyebrow" data-extra-field="eyebrow"></span>
+                  <h3 class="extra-panel-title" data-extra-field="title"></h3>
+                  <p class="extra-panel-org" data-extra-field="meta"></p>
+                  <p class="card-text" data-extra-field="summary"></p>
+                  <ul class="extra-points" data-extra-field="points"></ul>
+                </div>
+                <figure class="extra-figure">
+                  <img data-extra-field="image" src="./images/exp-rdtr-mapping.jpg" alt="" width="1024" height="768" loading="lazy" decoding="async" />
+                  <figcaption data-extra-field="caption"></figcaption>
+                </figure>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KEAHLIAN -->
+    <section class="section section--alt" id="keahlian">
+      <div class="shell">
+        <div class="section-head">
+          <p class="section-tag">06 — Keahlian</p>
           <h2 class="section-title">Perangkat, kompetensi &amp; sertifikasi</h2>
         </div>
 
@@ -655,19 +758,19 @@
     <section class="contact" id="kontak">
       <div class="shell contact-inner">
         <div class="contact-copy">
-          <p class="section-tag">06 — Kontak</p>
+          <p class="section-tag">07 — Kontak</p>
           <h2 class="contact-title">Punya pekerjaan pemetaan atau pengawasan K3?</h2>
           <p class="contact-lead">Ceritakan lingkup pekerjaan, lokasi, dan tenggatnya. Saya akan merespons dengan
             pendekatan kerja serta kebutuhan alat dan personel.</p>
-          <a class="contact-email" href="/cdn-cgi/l/email-protection#a39bcbc6d1cad0cacdc2c4c2e3c4cec2cacf8dc0ccce9cd0d6c1c9c6c0d79ef3c6d1cecacdd7c2c2cd869193c8c6d1c9c2869193d0c2cec2869193d3c6cec6d7c2c2cd8691938691e5869193e890">
-            <span class="__cf_email__" data-cfemail="bf87d7dacdd6ccd6d1ded8deffd8d2ded6d391dcd0d2">[email&#160;protected]</span>
+          <a class="contact-email" href="/cdn-cgi/l/email-protection#ddb5b8afb4bfbcaebcaeb4b3bcbabc9dbab0bcb4b1f3beb2b0">
+            <span class="__cf_email__" data-cfemail="0e666b7c676c6f7d6f7d67606f696f4e69636f6762206d6163">[email&#160;protected]</span>
             <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
               <path d="M3 8h10M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </a>
           <div class="contact-actions">
-            <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#b68eded3c4dfc5dfd8d7d1d7f6d1dbd7dfda98d5d9db89c5c3d4dcd3d5c28be6d3c4dbdfd8c2d7d7d8938486ddd3c4dcd7938486c5d7dbd7938486c6d3dbd3c2d7d7d89384869384f0938486fd85">Kirim email</a>
-            <a class="btn btn-outline" href="cv.html">Lihat CV</a>
+            <a class="btn btn-primary" href="/cdn-cgi/l/email-protection#98f0fdeaf1faf9ebf9ebf1f6f9fff9d8fff5f9f1f4b6fbf7f5a7ebedfaf2fdfbeca5c8fdeaf5f1f6ecf9f9f6bdaaa8f3fdeaf2f9bdaaa8ebf9f5f9">Kirim email</a>
+            <button class="btn btn-outline" type="button" data-open="cv">Lihat CV</button>
           </div>
         </div>
 
@@ -698,7 +801,114 @@
     </section>
   </main>
 
-  <script src="script.js" type="module"></script>
+  <!-- PROJECT MODAL -->
+  <div class="overlay" id="project-modal" role="dialog" aria-modal="true" aria-labelledby="project-modal-title" hidden>
+    <div class="overlay-dialog overlay-dialog--wide">
+      <button class="overlay-close" type="button" data-close aria-label="Tutup detail proyek">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+      <div class="overlay-eyebrow">
+        <span class="chip" data-tone="green" id="project-modal-chip">GIS &amp; Drone</span>
+      </div>
+      <h2 class="overlay-title" id="project-modal-title"></h2>
+      <div class="overlay-meta" id="project-modal-meta"></div>
+      <figure class="overlay-figure">
+        <img id="project-modal-image" src="./images/project-k3-ptw.jpg" alt="" width="1280" height="720" loading="lazy" decoding="async" />
+        <figcaption id="project-modal-caption"></figcaption>
+      </figure>
+      <div class="overlay-body" id="project-modal-body"></div>
+      <div class="overlay-actions">
+        <a class="btn btn-primary btn-sm" href="#kontak" data-close>Tanyakan proyek serupa</a>
+        <button class="btn btn-outline btn-sm" type="button" data-close>Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE MODAL -->
+  <div class="overlay" id="exp-modal" role="dialog" aria-modal="true" aria-labelledby="exp-modal-title" hidden>
+    <div class="overlay-dialog">
+      <button class="overlay-close" type="button" data-close aria-label="Tutup detail pengalaman">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+      <div class="overlay-eyebrow">
+        <span class="chip" data-tone="green" id="exp-modal-chip">GIS &amp; Survei</span>
+      </div>
+      <h2 class="overlay-title" id="exp-modal-title"></h2>
+      <div class="overlay-meta" id="exp-modal-meta"></div>
+      <div class="overlay-body" id="exp-modal-body"></div>
+      <div class="overlay-actions">
+        <button class="btn btn-outline btn-sm" type="button" data-close>Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CV MODAL -->
+  <div class="overlay" id="cv-modal" role="dialog" aria-modal="true" aria-labelledby="cv-modal-title" hidden>
+    <div class="overlay-dialog overlay-dialog--wide">
+      <button class="overlay-close" type="button" data-close aria-label="Tutup CV">
+        <svg class="icon" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+        </svg>
+      </button>
+      <h2 class="overlay-title" id="cv-modal-title">Curriculum Vitae</h2>
+      <div class="overlay-meta">
+        <span>Heri Basa Sinaga, S.Geog.</span>
+        <span>GIS · UAV Mapping · Safety Officer</span>
+        <span>Sibolga, Sumatera Utara</span>
+      </div>
+      <div class="overlay-body">
+        <div class="cv-block">
+          <h4>Ringkasan</h4>
+          <p>Praktisi geospasial dengan pengalaman lapangan sejak 2018 pada pemetaan UAV, survei terestris, pengolahan
+            data spasial, serta pengawasan K3 industri bersertifikat AK3U Kemnaker RI.</p>
+        </div>
+        <div class="cv-block">
+          <h4>Pendidikan</h4>
+          <ul class="cv-list">
+            <li><span>S1 Geografi — Universitas Muhammadiyah Surakarta</span><span>2021</span></li>
+            <li><span>D3 Penginderaan Jauh &amp; SIG — Sekolah Vokasi UGM</span><span>2016</span></li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h4>Pengalaman utama</h4>
+          <ul class="cv-list">
+            <li><span>Safety Officer — PT Solid Tehnik Sejahtera, PLTU Labuhan Angin</span><span>2026 — sekarang</span></li>
+            <li><span>GIS Consultant — Independen, Yogyakarta</span><span>2024 — 2025</span></li>
+            <li><span>Lead UAV Multispektral Pilot — UGM × PUSRI &amp; PTPN VII</span><span>2024</span></li>
+            <li><span>GIS &amp; UAV Mapping Specialist — PT Adaro Multi Service</span><span>2022 — 2024</span></li>
+            <li><span>GIS Specialist — CV Hycon Andromeda</span><span>2022</span></li>
+            <li><span>Field Survey Team Leader — CV Buana Wirapersada</span><span>2021</span></li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h4>Sertifikasi</h4>
+          <ul class="cv-list">
+            <li><span>Ahli K3 Umum (AK3U) — Kemnaker RI</span><span>2025</span></li>
+            <li><span>Basic Fire Fighting — Mutiara Mutu Sertifikasi</span><span>2025</span></li>
+            <li><span>First Aid — Mutiara Mutu Sertifikasi</span><span>2025</span></li>
+            <li><span>Pilot Drone — APDI</span><span>2024</span></li>
+          </ul>
+        </div>
+        <div class="cv-block">
+          <h4>Kontak</h4>
+          <ul class="cv-list">
+            <li><span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f49c91869d96958795879d9a959395b49399959d98da979b99">[email&#160;protected]</a></span><span>Email</span></li>
+            <li><span>Sibolga, Sumatera Utara</span><span>Domisili</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="overlay-actions">
+        <button class="btn btn-primary btn-sm" type="button" id="cv-print">Cetak / Simpan PDF</button>
+        <button class="btn btn-outline btn-sm" type="button" data-close>Tutup</button>
+      </div>
+    </div>
+  </div>
+
+    <script src="script.js" type="module"></script>
 </body>
 
 </html>
