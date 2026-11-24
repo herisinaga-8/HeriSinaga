@@ -470,14 +470,14 @@ button {
 }
 
 .mobile-menu.is-open {
-  display: block !important;
+  display: block;
   position: fixed;
   top: var(--header-h, 64px);
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 200;
-  background-color: #101916;
+  z-index: 999;
+  background: var(--surface, #101916);
   overflow-y: auto;
 }
 
