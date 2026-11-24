@@ -1,5 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // 1. Dropdown Kartu Pengalaman Tambahan
+  // 1. Toggle Menu Mobile
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', () => {
+      const isCurrentlyOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      const nextState = !isCurrentlyOpen;
+
+      menuToggle.setAttribute('aria-expanded', String(nextState));
+      mobileMenu.classList.toggle('is-open', nextState);
+      document.body.classList.toggle('is-locked', nextState);
+    });
+
+    mobileMenu.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        menuToggle.setAttribute('aria-expanded', 'false');
+        mobileMenu.classList.remove('is-open');
+        document.body.classList.remove('is-locked');
+      });
+    });
+  }
+
+  // 2. Dropdown Kartu Pengalaman Tambahan
   const cardButtons = document.querySelectorAll('.extra-card-btn');
   const detailPanels = document.querySelectorAll('.extra-showcase-panel');
   const showcaseBox = document.querySelector('.extra-showcase');
@@ -33,25 +56,4 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // 2. Toggle Menu Seluler (Mobile Menu)
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', String(!isOpen));
-      mobileMenu.classList.toggle('is-open', !isOpen);
-      document.body.classList.toggle('is-locked', !isOpen);
-    });
-
-    mobileMenu.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('is-open');
-        document.body.classList.remove('is-locked');
-      });
-    });
-  }
 });
