@@ -470,9 +470,15 @@ button {
 }
 
 .mobile-menu.is-open {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: block !important;
+  position: fixed;
+  top: var(--header-h, 64px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 200;
+  background-color: #101916;
+  overflow-y: auto;
 }
 
 @keyframes menu-in {
