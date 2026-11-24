@@ -3,21 +3,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
 
-  if (menuToggle && mobileMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isCurrentlyOpen = menuToggle.getAttribute('aria-expanded') === 'true';
-      const nextState = !isCurrentlyOpen;
+  const setMobileMenuState = (open) => {
+    if (!menuToggle || !mobileMenu) return;
+    menuToggle.setAttribute('aria-expanded', String(open));
+    mobileMenu.classList.toggle('is-open', open);
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('is-locked', open);
+  };
 
-      menuToggle.setAttribute('aria-expanded', String(nextState));
-      mobileMenu.classList.toggle('is-open', nextState);
-      document.body.classList.toggle('is-locked', nextState);
+  if (menuToggle && mobileMenu) {
+    menuToggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      const isCurrentlyOpen = menuToggle.getAttribute('aria-expanded') === 'true';
+      setMobileMenuState(!isCurrentlyOpen);
     });
 
     mobileMenu.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        mobileMenu.classList.remove('is-open');
-        document.body.classList.remove('is-locked');
+        setMobileMenuState(false);
       });
     });
   }

@@ -2130,3 +2130,30 @@ button {
     padding: 22px;
   }
 }
+
+/* 15. Fix Mobile Menu Layering ------------------------------------------- */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: var(--header-h, 64px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  overflow-y: auto;
+  padding: 20px var(--gutter, 18px) 40px;
+  background: #101916;
+  border-top: 1px solid var(--line);
+}
+
+.mobile-menu.is-open {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  animation: menu-in 0.18s var(--ease);
+}
+
+.mobile-menu .mobile-nav a {
+  display: block;
+  color: var(--text);
+}
