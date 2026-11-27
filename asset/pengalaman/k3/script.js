@@ -1,215 +1,168 @@
-/* ============================================================
-   Portofolio K3 — perilaku UI
-   1. Tab penugasan & URL Hash
-   2. Galeri foto / slider interaktif
-   ============================================================ */
+/* ==========================================================================
+   Portofolio K3 - Heri Basa Sinaga
+   Pengendali tab navigasi, galeri foto (slider), dan URL hash
+   ========================================================================== */
 
-const PLACEHOLDER_MARKUP =
-    '<i class="fa-regular fa-image" aria-hidden="true"></i><span>Dokumentasi belum tersedia</span>';
+(function () {
+    'use strict';
 
-/* ---------------- Tabs ---------------- */
+    const TAB_SELECTOR = '.tab-btn';
+    const PANEL_SELECTOR = '.panel-view';
 
-function initTabs() {
-    const tabs = Array.from(document.querySelectorAll('.tab-btn'));
-    const panels = Array.from(document.querySelectorAll('.panel-view'));
-    if (!tabs.length || !panels.length) return;
+    /**
+     * Mengaktifkan satu panel berdasarkan id target dan menyinkronkan
+     * status ARIA pada tombol tab terkait.
+     */
+    function createActivator(tabs, panels) {
+        return function activate(targetId, options) {
+            const { focus = false } = options || {};
 
-    const nav = tabs[0].closest('[role="tablist"]') || tabs[0].parentElement;
-
-    const activate = (targetId, { focus = false } = {}) => {
-        let matchedId = targetId;
-
-        if (!document.getElementById(targetId)) {
-            const clean = targetId.replace(/[^0-9]/g, '');
-            if (clean) matchedId = `panel-k3-${clean}`;
-        }
-
-        tabs.forEach((tab) => {
-            const panelId = tab.getAttribute('aria-controls') || tab.dataset.target;
-            const isActive = panelId === matchedId;
-            tab.setAttribute('aria-selected', String(isActive));
-            tab.classList.toggle('active', isActive);
-            tab.tabIndex = isActive ? 0 : -1;
-        });
-
-        panels.forEach((panel) => {
-            const isActive = panel.id === matchedId;
-            panel.hidden = !isActive;
-            panel.classList.toggle('is-active', isActive);
-        });
-
-        if (focus) {
-            const activeTab = tabs.find((tab) => {
-                const pid = tab.getAttribute('aria-controls') || tab.dataset.target;
-                return pid === matchedId;
+            tabs.forEach((item) => {
+                const isActive = item.dataset.target === targetId;
+                item.setAttribute('aria-selected', String(isActive));
+                item.tabIndex = isActive ? 0 : -1;
+                item.classList.toggle('active', isActive);
             });
-            activeTab?.focus({ preventScroll: true });
-            activeTab?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-        }
-    };
 
-    const syncFromHash = () => {
-        const hash = window.location.hash.replace('#', '').trim();
-        if (!hash) {
-            const fallback = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
-            const targetId = fallback.getAttribute('aria-controls') || fallback.dataset.target;
-            activate(targetId);
-            return;
-        }
-        activate(hash);
-    };
+            panels.forEach((panel) => {
+                panel.hidden = panel.id !== targetId;
+            });
 
-    tabs.forEach((tab) => {
-        tab.addEventListener('click', () => {
-            const targetId = tab.getAttribute('aria-controls') || tab.dataset.target;
-            activate(targetId, { focus: true });
-            history.replaceState(null, '', `#${targetId}`);
-        });
-    });
+            if (focus) {
+                const activeTab = tabs.find((item) => item.dataset.target === targetId);
+                if (activeTab) {
+                    activeTab.focus();
+                    activeTab.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+                }
+            }
+        };
+    }
 
-    nav?.addEventListener('keydown', (event) => {
-        const currentTab = event.target.closest('.tab-btn');
-        const currentIndex = tabs.indexOf(currentTab);
-        if (currentIndex === -1) return;
+    function initTabs() {
+        const tabs = Array.from(document.querySelectorAll(TAB_SELECTOR));
+        const panels = Array.from(document.querySelectorAll(PANEL_SELECTOR));
+        const nav = tabs[0] && tabs[0].parentElement;
 
-        const moves = {
-            ArrowRight: (currentIndex + 1) % tabs.length,
-            ArrowLeft: (currentIndex - 1 + tabs.length) % tabs.length,
-            Home: 0,
-            End: tabs.length - 1,
+        if (!tabs.length || !panels.length) return;
+
+        const activate = createActivator(tabs, panels);
+
+        const handleHashChange = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                activate(hash);
+                return;
+            }
+
+            const preselected =
+                tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') || tabs[0];
+            if (preselected) activate(preselected.dataset.target);
         };
 
-        const nextIndex = moves[event.key];
-        if (nextIndex === undefined) return;
+        tabs.forEach((tab) => {
+            tab.addEventListener('click', () => {
+                const targetId = tab.dataset.target;
+                activate(targetId);
+                history.replaceState(null, '', '#' + targetId);
+            });
+        });
 
-        event.preventDefault();
-        const nextTab = tabs[nextIndex];
-        const nextTarget = nextTab.getAttribute('aria-controls') || nextTab.dataset.target;
-        activate(nextTarget, { focus: true });
-        history.replaceState(null, '', `#${nextTarget}`);
-    });
+        if (nav) {
+            nav.addEventListener('keydown', (event) => {
+                const currentTab = document.activeElement.closest(TAB_SELECTOR);
+                const current = tabs.indexOf(currentTab);
+                if (current === -1) return;
 
-    syncFromHash();
-    window.addEventListener('hashchange', syncFromHash);
-}
+                const nextIndex = {
+                    ArrowRight: (current + 1) % tabs.length,
+                    ArrowLeft: (current - 1 + tabs.length) % tabs.length,
+                    Home: 0,
+                    End: tabs.length - 1
+                }[event.key];
 
-/* ---------------- Gallery / Slider ---------------- */
+                if (nextIndex === undefined) return;
+                event.preventDefault();
 
-function guardImage(image) {
-    const markMissing = () => {
-        const slide = image.parentElement;
-        if (!slide || slide.querySelector('.slide-placeholder')) return;
-        image.classList.add('is-missing');
-        const placeholder = document.createElement('div');
-        placeholder.className = 'slide-placeholder';
-        placeholder.innerHTML = PLACEHOLDER_MARKUP;
-        slide.append(placeholder);
-    };
+                const nextTab = tabs[nextIndex];
+                activate(nextTab.dataset.target, { focus: true });
+                history.replaceState(null, '', '#' + nextTab.dataset.target);
+            });
+        }
 
-    if (image.complete && image.naturalWidth === 0) {
-        markMissing();
-    } else {
+        handleHashChange();
+        window.addEventListener('hashchange', handleHashChange);
+    }
+
+    /**
+     * Menampilkan placeholder bila file dokumentasi tidak tersedia,
+     * sehingga galeri tetap rapi tanpa ikon gambar rusak.
+     */
+    function guardImage(image) {
+        const markMissing = () => {
+            image.classList.add('is-missing');
+            if (image.parentElement.querySelector('.slide-placeholder')) return;
+
+            const placeholder = document.createElement('div');
+            placeholder.className = 'slide-placeholder';
+            placeholder.innerHTML =
+                '<i class="fa-regular fa-image" aria-hidden="true"></i>' +
+                '<span>Dokumentasi belum tersedia</span>';
+            image.parentElement.append(placeholder);
+        };
+
+        if (image.complete && image.naturalWidth === 0) markMissing();
         image.addEventListener('error', markMissing, { once: true });
     }
-}
 
-function initGallery(galleryRoot) {
-    const track = galleryRoot.querySelector('[data-track]');
-    const slides = track ? Array.from(track.children) : [];
-    const dotsWrap = galleryRoot.querySelector('[data-dots]');
-    const counter = galleryRoot.querySelector('[data-counter]');
-    const slider = galleryRoot.querySelector('.slider');
-    
-    if (!track || !slides.length) return;
+    function initGallery(root) {
+        const container = root.closest(PANEL_SELECTOR) || root.parentElement;
+        const track = container.querySelector('[data-track]');
+        const slides = track ? Array.from(track.children) : [];
+        const dots = Array.from(container.querySelectorAll('.dot'));
+        const counter = container.querySelector('[data-counter]');
 
-    let index = 0;
-    let dragStartX = null;
+        if (!track || slides.length === 0) return;
 
-    // Buat dots secara otomatis jika kontribusinya ada tetapi kosong
-    let dots = [];
-    if (dotsWrap) {
-        dotsWrap.innerHTML = ''; // Bersihkan jika ada duplikasi
-        dots = slides.map((_, dotIndex) => {
-            const dot = document.createElement('button');
-            dot.type = 'button';
-            dot.className = 'dot';
-            dot.dataset.index = String(dotIndex);
-            dot.setAttribute('aria-label', `Tampilkan foto ${dotIndex + 1}`);
-            dot.setAttribute('aria-current', dotIndex === 0 ? 'true' : 'false');
-            dotsWrap.append(dot);
-            return dot;
+        let index = 0;
+
+        const render = (next) => {
+            index = (next + slides.length) % slides.length;
+            track.style.transform = 'translateX(-' + index * 100 + '%)';
+
+            dots.forEach((dot, dotIndex) => {
+                dot.setAttribute('aria-current', String(dotIndex === index));
+            });
+
+            if (counter) {
+                counter.textContent = 'Foto ' + (index + 1) + ' / ' + slides.length;
+            }
+        };
+
+        container.addEventListener('click', (event) => {
+            const stepButton = event.target.closest('[data-step]');
+            const dot = event.target.closest('.dot');
+
+            if (stepButton) {
+                event.preventDefault();
+                render(index + Number(stepButton.dataset.step));
+            } else if (dot) {
+                event.preventDefault();
+                render(Number(dot.dataset.index));
+            }
         });
+
+        render(0);
     }
 
-    const render = (nextIndex) => {
-        const total = slides.length;
-        index = ((nextIndex % total) + total) % total;
+    function init() {
+        initTabs();
+        document.querySelectorAll('img').forEach(guardImage);
+        document.querySelectorAll('[data-slider]').forEach(initGallery);
+    }
 
-        // Geser track gambar
-        track.style.transform = `translateX(-${index * 100}%)`;
-
-        // Update status aktif dots
-        dots.forEach((dot, dotIndex) => {
-            dot.setAttribute('aria-current', String(dotIndex === index));
-        });
-
-        // Update teks counter (misal: Foto 1 / 3)
-        if (counter) {
-            counter.textContent = `Foto ${index + 1} / ${total}`;
-        }
-    };
-
-    // Event klik pada tombol panah next/prev atau dots
-    galleryRoot.addEventListener('click', (event) => {
-        const stepBtn = event.target.closest('[data-step]');
-        const dotBtn = event.target.closest('.dot');
-
-        if (stepBtn) {
-            event.preventDefault();
-            const stepValue = Number(stepBtn.dataset.step) || 1;
-            render(index + stepValue);
-        } else if (dotBtn) {
-            event.preventDefault();
-            const targetIndex = Number(dotBtn.dataset.index);
-            if (!isNaN(targetIndex)) {
-                render(targetIndex);
-            }
-        }
-    });
-
-    // Navigasi geser (swipe / pointer drag) pada layar sentuh atau mouse
-    slider?.addEventListener('pointerdown', (event) => {
-        dragStartX = event.clientX;
-    });
-
-    slider?.addEventListener('pointerup', (event) => {
-        if (dragStartX === null) return;
-        const deltaX = event.clientX - dragStartX;
-        dragStartX = null;
-
-        if (Math.abs(deltaX) > 40) {
-            render(index + (deltaX < 0 ? 1 : -1));
-        }
-    });
-
-    slider?.addEventListener('pointercancel', () => {
-        dragStartX = null;
-    });
-
-    // Inisialisasi posisi awal foto ke indeks 0
-    render(0);
-}
-
-/* ---------------- Boot ---------------- */
-
-function init() {
-    initTabs();
-    document.querySelectorAll('.slide img').forEach(guardImage);
-    document.querySelectorAll('.gallery').forEach(initGallery);
-}
-
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init, { once: true });
-} else {
-    init();
-}
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+})();
